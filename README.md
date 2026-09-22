@@ -211,6 +211,23 @@ mvn dependency:add-dependency "-Dartifact=org.mariadb.jdbc:mariadb-java-client:3
 mvn dependency:add-dependency -Dartifact=org.mariadb.jdbc:mariadb-java-client:3.3.3
 ```
 
+#### 2.4 Installer les dépendances JAVA avec `maven`
+
+Maven permet d'éviter de copier manuellement les fichiers `.jar` dans un dossier `lib`.
+
+```powershell
+mvn compile
+```
+
+Cette commande va notamment :
+
+- lire le fichier `pom.xml` ;
+- télécharger les dépendances absentes ;
+- les placer dans `.m2\repository` ;
+- compiler les fichiers Java dans `target\classes`.
+
+  
+
 
 
 
