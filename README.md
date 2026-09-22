@@ -29,6 +29,23 @@ Compilez le projet :
 mvn compile
 ```
 
+## Comment a été construit le projet
+
+### 1. Installation de maven (sans droits administatrateur)
+
+#### 1.0 Télécharger
+
+[Télécharger Maven](https://maven.apache.org/download.cgi)
+
+#### 1.1 Décompresser
+
+Décompresser `apache-maven-3.9.16-bin.zip` dans $HOME\AppData\Local\Programs
+
+#### 1.2 Renommer
+
+apache-maven-3.9.16 en Apache-Maven par exemple
+
+
 Exécutez la classe avec Maven :
 
 ```powershell
