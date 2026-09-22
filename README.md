@@ -226,7 +226,15 @@ Cette commande va notamment :
 - les placer dans `.m2\repository` ;
 - compiler les fichiers Java dans `target\classes`.
 
-  
+#### 2.5 Voir les dépendances utilisée avec `Maven`
+
+Vous pouvez voir les dépendances effectivement utilisées avec :
+
+```powershell
+mvn dependency:tree
+```
+
+
 
 
 
