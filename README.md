@@ -280,10 +280,30 @@ BONJOUR MAVEN
 Le texte est vide ? false
 ```
 
-Vous pouvez aussi compiler et exécuter en une seule commande :
+### 4.0 Aller plus loin avec Maven
+
+Compiler et exécuter en une seule commande :
 
 ```powershell
 mvn compile exec:java
+```
+
+Nettoyer les fichiers générés puis reconstruire le projet :
+
+```powershell
+mvn clean compile
+```
+
+Créer un fichier `.jar` :
+
+```powershell
+mvn package
+```
+
+Le fichier sera généré dans :
+
+```text
+target\demo-maven-1.0-SNAPSHOT.jar
 ```
 
 
