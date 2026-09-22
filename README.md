@@ -163,8 +163,7 @@ Dans un terminal Bash :
 ```Bash
 search="mariadb-java-client"
 
-curl -s "https://search.maven.org/solrsearch/select?q=${search}&rows=5&wt=json" | \
-jq -r '.response.docs[] | "\(.g) : \(.a) : \(.latestVersion)"'
+curl -s "https://search.maven.org/solrsearch/select?q=${search}&rows=5&wt=json" | jq -r '.response.docs[] | "\(.g) : \(.a) : \(.latestVersion)"'
 ```
 
 Cela vous permet d'obtenir une réponse :
@@ -198,10 +197,8 @@ L'ajout traditionnel d'un nouvelle dépendance ce fait en général en éditant 
 </dependencies>
 ```
 
-**La syntaxe générale est**  :
-```
-mvn dependency:add-dependency -Dartifact=<groupId>:<artifactId>:<version>
-```
+**Ici les données injectées ont été récupérées dans la request**  :
+
 **Notes:** La fonctionnalité `mvn dependency:add` est une fonctionnalité dans la version de développement
 
 Exemple avec les informations récupérées dans la recherche :
