@@ -128,5 +128,20 @@ mvn archetype:generate \
   -DinteractiveMode=false
 ```
 
+la structure obtenue est assez semblable à celle-ci :
+
+```text
+demo-maven
+├── pom.xml
+└── src
+    ├── main
+    │   └── java
+    │       └── fr
+    │           └── exemple
+    │               └── App.java
+    └── test
+        └── java
+```
+
 
 
