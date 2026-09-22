@@ -197,29 +197,24 @@ L'ajout traditionnel d'un nouvelle dépendance ce fait en général en éditant 
 </dependencies>
 ```
 
-**Ici les données injectées ont été récupérées dans la request**  :
+##### 2.4. **Ajouter des plugins JAVA à `pom.xml`**
 
-**Notes:** La fonctionnalité `mvn dependency:add` est une fonctionnalité dans la version de développement
+<build>
+  <plugins>
 
-Exemple avec les informations récupérées dans la recherche :
+    <!-- Plugin jOOQ minimal sans bloc <configuration> -->
+    <plugin>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq-codegen-maven</artifactId>
+      <version>3.19.11</version>
+    </plugin>
 
-`<groupId>` ==> org.mariadb.jdbc
+  </plugins>
+</build>
 
-`<artifactId>` ==> mariadb-java-client
+##### 2.3.2. **Maven ne permet pas d'ajouter au `pom.xml` de dépendance**
 
-`<groupId>` ==> 3.5.3
 
-**Windows**
-
-```PowerShell
-mvn dependency:add-dependency "-Dartifact=org.mariadb.jdbc:mariadb-java-client:3.5.3"
-```
-
-**Linux**
-
-```bash
-mvn dependency:add-dependency -Dartifact=org.mariadb.jdbc:mariadb-java-client:3.5.3
-```
 
 #### 2.4 Installer les dépendances JAVA avec `maven`
 
