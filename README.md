@@ -88,4 +88,45 @@ $env:Path = "$maven\bin;$env:Path"
 mvn -version
 ```
 
+### 2. Utiliser maven pour construire le projet
+
+#### 2.1 Créer un projet Maven
+
+**Windows**
+
+Dans PowerShell, placez-vous dans le dossier où vous souhaitez créer le projet :
+
+```powershell
+cd "$HOME\Documents"
+```
+
+Lancez la génération du projet :
+
+```powershell
+mvn archetype:generate `
+  "-DgroupId=fr.exemple" `
+  "-DartifactId=demo-maven" `
+  "-DarchetypeArtifactId=maven-archetype-quickstart" `
+  "-DarchetypeVersion=1.5" `
+  "-DinteractiveMode=false"
+```
+
+**Linux**
+
+Dans le terminal, placez-vous dans le dossier où vous souhaitez créer le projet :
+
+```bash
+cd "$HOME\Documents"
+```
+
+```Bash
+mvn archetype:generate \
+  -DgroupId=fr.exemple \
+  -DartifactId=demo-maven \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DarchetypeVersion=1.5 \
+  -DinteractiveMode=false
+```
+
+
 
