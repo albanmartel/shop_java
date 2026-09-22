@@ -143,5 +143,41 @@ demo-maven
         └── java
 ```
 
+#### 2.2. Rechercher des dépendances JAVA
+
+**Windows**
+
+Dans un terminal PowerShell :
+
+```PowerShell
+$search = "mariadb-java-client"
+
+(Invoke-RestMethod "https://search.maven.org/solrsearch/select?q=$search&rows=5&wt=json").response.docs | Select-Object @{N="GroupId";E={$_.g}}, @{N="ArtifactId";E={$_.a}}, @{N="LatestVersion";E={$_.latestVersion}}
+```
+
+**Linux**
+
+Dans un terminal Bash :
+*nécessite l'intallation de* `jq` *(jq est une ligne command qui permet de parser, éditer, transformer des données en données JSON)*
+
+```Bash
+search="mariadb-java-client"
+
+curl -s "https://search.maven.org/solrsearch/select?q=${search}&rows=5&wt=json" | \
+jq -r '.response.docs[] | "\(.g) : \(.a) : \(.latestVersion)"'
+```
+
+Cela vous permet d'obtenir une réponse :
+
+```txt
+GroupId                     ArtifactId               LatestVersion
+-------                     ----------               -------------
+org.jumpmind.symmetric.jdbc mariadb-java-client      1.1.1
+org.mariadb.jdbc            mariadb-java-client      3.5.3
+org.mariadb.jdbc            mariadb-java-client-jre7 1.6.1
+org.mariadb.jdbc            mariadb-java-client-jre6 1.6.1
+```
+
+
 
 
