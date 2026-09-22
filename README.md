@@ -51,5 +51,30 @@ Décompresser `apache-maven-3.9.16-bin.zip` dans $HOME\AppData\Local\Programs
 
 apache-maven-3.9.16 en Apache-Maven par exemple
 
+#### 1.3 Configurer la variable d'environnement du compte local (Windows)
+
+Dans un PowerShell exécutez ceci :
+
+```PowerShell
+$maven = $HOME\AppData\Local\Programs\Apache-Maven"
+
+[Environment]::SetEnvironmentVariable(
+  "MAVEN_HOME",
+  $maven,
+  "User"
+)
+              
+$pathUtilisateur = [Environment]::GetEnvironmentVariable("Path", "User")
+
+if ($pathUtilisateur -notlike "*$maven\bin*") {
+    [Environment]::SetEnvironmentVariable(
+        "Path",
+        "$pathUtilisateur;$maven\bin",
+        "User"
+    )
+}
+```
+
+Fermer le terminal PowerShell
 
 
