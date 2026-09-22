@@ -178,6 +178,42 @@ org.mariadb.jdbc            mariadb-java-client-jre7 1.6.1
 org.mariadb.jdbc            mariadb-java-client-jre6 1.6.1
 ```
 
+#### 2.3 Ajouter des dépendances JAVA à `pom.xml`
+
+Le `pom.xml` est le cœur de tout projet Maven. 
+
+POM signifie **Project Object Model** — un seul fichier XML qui déclare ce qu'est votre projet (son identité), ce dont il a besoin (ses dépendances) et comment le construire (plugins et configuration). 
+
+Maven lit ce fichier, télécharge tout ce qu'il référence depuis un dépôt et exécute la construction. Là où un projet ad hoc disperse ces informations entre des scripts shell et un dossier lib/ de JARs copiés manuellement, Maven les regroupe toutes dans un document déclaratif et versionné.
+
+**La syntaxe générale est**  :
+```
+mvn dependency:add-dependency -Dartifact=<groupId>:<artifactId>:<version>
+```
+
+Exemple avec les informations récupérées dans la recherche :
+
+`<groupId>` ==> org.mariadb.jdbc
+
+`<artifactId>` ==> mariadb-java-client
+
+`<groupId>` ==> 3.5.3
+
+**Windows**
+
+```PowerShell
+mvn dependency:add-dependency "-Dartifact=org.mariadb.jdbc:mariadb-java-client:3.3.3"
+```
+
+**Linux**
+
+```bash
+mvn dependency:add-dependency -Dartifact=org.mariadb.jdbc:mariadb-java-client:3.3.3
+```
+
+
+
+
 
 
 
