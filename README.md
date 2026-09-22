@@ -306,7 +306,7 @@ Le fichier sera généré dans :
 target\demo-maven-1.0-SNAPSHOT.jar
 ```
 
-## 5.0 Le PENSE-BËTES Maven
+## 5.0 Le PENSE-BêTES Maven
 
 ```powershell
 # Créer un projet
