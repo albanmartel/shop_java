@@ -234,6 +234,62 @@ Vous pouvez voir les dépendances effectivement utilisées avec :
 mvn dependency:tree
 ```
 
+#### 2.6 Forcer Maven a vérifier des mises-à-jour
+
+Pour forcer Maven à vérifier les mises à jour :
+
+```powershell
+mvn clean compile
+```
+
+### 3.0 Exécuter du code JAVA avec Maven
+
+Imaginons que vous ayez le code suivant dans un projet JAVA pour la classe APP dans le fichier `App.java` :
+
+```java
+package fr.exemple;
+
+import org.apache.commons.lang3.StringUtils;
+
+public class App {
+    public static void main(String[] args) {
+        String texte = "Bonjour Maven";
+
+        System.out.println(StringUtils.upperCase(texte));
+        System.out.println("Le texte est vide ? " + StringUtils.isBlank(texte));
+    }
+}
+```
+
+Compilez le projet :
+
+```powershell
+mvn compile
+```
+
+Exécutez la classe avec Maven :
+
+```powershell
+mvn exec:java
+```
+
+Résultat attendu :
+
+```text
+BONJOUR MAVEN
+Le texte est vide ? false
+```
+
+Vous pouvez aussi compiler et exécuter en une seule commande :
+
+```powershell
+mvn compile exec:java
+```
+
+
+
+
+
 
 
 
