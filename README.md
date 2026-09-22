@@ -56,7 +56,7 @@ apache-maven-3.9.16 en Apache-Maven par exemple
 Dans un PowerShell exécutez ceci :
 
 ```PowerShell
-$maven = $HOME\AppData\Local\Programs\Apache-Maven"
+$maven = "$HOME\AppData\Local\Programs\Apache-Maven"
 
 [Environment]::SetEnvironmentVariable(
   "MAVEN_HOME",
@@ -186,10 +186,23 @@ POM signifie **Project Object Model** — un seul fichier XML qui déclare ce qu
 
 Maven lit ce fichier, télécharge tout ce qu'il référence depuis un dépôt et exécute la construction. Là où un projet ad hoc disperse ces informations entre des scripts shell et un dossier lib/ de JARs copiés manuellement, Maven les regroupe toutes dans un document déclaratif et versionné.
 
+L'ajout traditionnel d'un nouvelle dépendance ce fait en général en éditant directement dans le fichier `pom.xml` et en ajoutant: 
+
+```
+<dependencies>
+    <dependency>
+        <groupId>org.mariadb.jdbc</groupId>
+        <artifactId>mariadb-java-client</artifactId>
+        <version>3.5.3</version>
+    </dependency>
+</dependencies>
+```
+
 **La syntaxe générale est**  :
 ```
 mvn dependency:add-dependency -Dartifact=<groupId>:<artifactId>:<version>
 ```
+**Notes:** La fonctionnalité `mvn dependency:add` est une fonctionnalité dans la version de développement
 
 Exemple avec les informations récupérées dans la recherche :
 
@@ -202,13 +215,13 @@ Exemple avec les informations récupérées dans la recherche :
 **Windows**
 
 ```PowerShell
-mvn dependency:add-dependency "-Dartifact=org.mariadb.jdbc:mariadb-java-client:3.3.3"
+mvn dependency:add-dependency "-Dartifact=org.mariadb.jdbc:mariadb-java-client:3.5.3"
 ```
 
 **Linux**
 
 ```bash
-mvn dependency:add-dependency -Dartifact=org.mariadb.jdbc:mariadb-java-client:3.3.3
+mvn dependency:add-dependency -Dartifact=org.mariadb.jdbc:mariadb-java-client:3.5.3
 ```
 
 #### 2.4 Installer les dépendances JAVA avec `maven`
