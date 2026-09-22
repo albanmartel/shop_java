@@ -77,4 +77,15 @@ if ($pathUtilisateur -notlike "*$maven\bin*") {
 
 Fermer le terminal PowerShell
 
+#### 1.4 Vérifier votre installation de Maven
+
+Ouvrir un nouveau terminal PowerShell et vérifier votre installation :
+
+```PowerShell
+$env:MAVEN_HOME = $maven
+$env:Path = "$maven\bin;$env:Path"
+
+mvn -version
+```
+
 
