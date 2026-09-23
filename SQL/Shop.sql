@@ -1,85 +1,85 @@
 -- ------------------------------------------------------------------------------
 -- - Reconstruction de la base de données                                     ---
 -- ------------------------------------------------------------------------------
-DROP DATABASE IF EXISTS Shop;
-CREATE DATABASE Shop;
-USE Shop;
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE shop;
+USE shop;
 
 -- -----------------------------------------------------------------------------
 -- - Construction de la tables des articles en vente                         ---
 -- -----------------------------------------------------------------------------
-CREATE TABLE T_Articles (
+CREATE TABLE articles (
 	IdArticle			int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Description			varchar(30)	NOT NULL,
 	Brand				varchar(30)	NOT NULL,
 	UnitaryPrice		float(8)	NOT NULL DEFAULT 0
 ) ENGINE = InnoDB;
 
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Souris'     ,	'Logitoch', 65 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Clavier'    ,	'Microhard', 49.5 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Systeme d''exploitation',	'Fenetres Vistouille',	150 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Tapis souris', 'Chapeau Bleu',5 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Cle USB 8 To', 'Syno', 8 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Laptop'      , 	'PH',	1199 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'CD x 500'    , 'CETME', 250 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'DVD-R x 100' , 'CETME', 99 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'DVD+R x 100' , 'CETME', 105 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Batterie Laptop', 'PH',	80 );
-INSERT INTO T_Articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Casque Audio', 'Syno',	105 );
-INSERT INTO T_Articles ( Description, Brand ) VALUES ( 'WebCam'      , 	'Logitoch' );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Souris'     ,	'Logitoch', 65 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Clavier'    ,	'Microhard', 49.5 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Systeme d''exploitation',	'Fenetres Vistouille',	150 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Tapis souris', 'Chapeau Bleu',5 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Cle USB 8 To', 'Syno', 8 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Laptop'      , 	'PH',	1199 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'CD x 500'    , 'CETME', 250 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'DVD-R x 100' , 'CETME', 99 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'DVD+R x 100' , 'CETME', 105 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Batterie Laptop', 'PH',	80 );
+INSERT INTO articles ( Description, Brand, UnitaryPrice ) VALUES ( 'Casque Audio', 'Syno',	105 );
+INSERT INTO articles ( Description, Brand ) VALUES ( 'WebCam'      , 	'Logitoch' );
 
-SELECT * FROM T_Articles;
+SELECT * FROM articles;
 
-CREATE TABLE T_Categories (
+CREATE TABLE categories (
 	IdCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
 	CatName VARCHAR(30) NOT NULL,
 	Description VARCHAR(100) NOT NULL
  )
 
--- ALTER TABLE t_articles ADD COLUMN IdCategory INT(4);
--- ALTER TABLE T_Articles ADD FOREIGN KEY(IdCategory) REFERENCES T_Categories(IdCategory);
+-- ALTER TABLE articles ADD COLUMN IdCategory INT(4);
+-- ALTER TABLE articles ADD FOREIGN KEY(IdCategory) REFERENCES categories(IdCategory);
 
--- select IdArticle,T_Articles.Description,Brand,UnitaryPrice,T_Articles.IdCategory,CatName,T_Categories.Description 
--- from t_articles inner join t_categories where t_articles.IdCategory = t_categories.IdCategory and IdArticle=1;
+-- select IdArticle,articles.Description,Brand,UnitaryPrice,articles.IdCategory,CatName,categories.Description 
+-- from articles inner join categories where articles.IdCategory = categories.IdCategory and IdArticle=1;
 
--- SELECT IdArticle,t_articles.Description,brand,UnitaryPrice,CatName FROM t_articles 
--- INNER JOIN t_categories WHERE t_articles.IdCategory=t_categories.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
+-- SELECT IdArticle,articles.Description,brand,UnitaryPrice,CatName FROM articles 
+-- INNER JOIN categories WHERE articles.IdCategory=categories.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
 
-CREATE TABLE T_Orders (
+CREATE TABLE orders (
 	IdOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	Amount			float(4)	NOT NULL DEFAULT 0,
 	DateOrder 		DATE		NOT NULL DEFAULT NOW(),
 	IdCustomer      INT(4)   	NOT NULL,
-	FOREIGN KEY(IdCustomer) REFERENCES T_Customers(IdCustomer)
+	FOREIGN KEY(IdCustomer) REFERENCES customers(IdCustomer)
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE T_Order_Items (
+CREATE TABLE order_items (
 	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	
 	IdArticle         INT(4)   NOT NULL,
-	FOREIGN KEY(IdArticle) REFERENCES T_Articles(IdArticle),
+	FOREIGN KEY(IdArticle) REFERENCES articles(IdArticle),
 	
 	Quantity				FLOAT(4) NOT NULL DEFAULT 1,
 	UnitaryPrice		FLOAT(4)	NOT NULL DEFAULT 0,
 	
 	IdOrder           INT(4)   NOT NULL,
-	FOREIGN KEY(IdOrder) REFERENCES T_Orders(IdOrder)
+	FOREIGN KEY(IdOrder) REFERENCES orders(IdOrder)
 ) ENGINE = InnoDB;
 
-CREATE TABLE T_Users (
+CREATE TABLE users (
 	IdUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Login				varchar(20)	NOT NULL UNIQUE,
 	Password			varchar(20)	NOT NULL
 ) ENGINE = InnoDB;
 
-CREATE TABLE T_Customers (
+CREATE TABLE customers (
 	id					int(10)			PRIMARY KEY AUTO_INCREMENT,
 	name				varchar(20) 	NOT NULL,
 	firstName			varchar(20) 	NOT NULL,
-	email				varchar(45) 	NOT NULL,	
+	email				varchar(45) 	NOT NULL,
 	phone				varchar(45) 	NOT NULL,
 	address				varchar(90) 	NOT NULL,
 	IdUser           	INT(4)   NOT NULL,
-	FOREIGN KEY(IdUser) REFERENCES T_Users(IdUser)	
+	FOREIGN KEY(IdUser) REFERENCES users(IdUser)
 ) ENGINE = InnoDB;
