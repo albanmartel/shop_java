@@ -67,22 +67,31 @@
 
   <build>
     <plugins>
-      <!-- 1. Plugin de compilation configuré pour traiter l'annotation Lombok -->
+      <!-- Configuration pour ignorer l'erreur M2E de jOOQ dans Eclipse -->
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
+        <groupId>org.eclipse.m2e</groupId>
+        <artifactId>lifecycle-mapping</artifactId>
+        <version>1.0.0</version>
         <configuration>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>1.18.38</version>
-            </path>
-          </annotationProcessorPaths>
+          <lifecycleMappingMetadata>
+            <pluginExecutions>
+              <pluginExecution>
+                <pluginExecutionFilter>
+                  <groupId>org.jooq</groupId>
+                  <artifactId>jooq-codegen-maven</artifactId>
+                  <versionRange>[3.0,)</versionRange>
+                  <goals>
+                    <goal>generate</goal>
+                  </goals>
+                </pluginExecutionFilter>
+                <action>
+                  <ignore />
+                </action>
+              </pluginExecution>
+            </pluginExecutions>
+          </lifecycleMappingMetadata>
         </configuration>
       </plugin>
-
       <!-- 2. Reading env.properties depuis src/main/resources/env.properties -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
