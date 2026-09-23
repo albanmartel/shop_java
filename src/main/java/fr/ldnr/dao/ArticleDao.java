@@ -16,6 +16,9 @@ import fr.ldnr.models.Article;
  */
 public class ArticleDao extends AbstractDao<Article> {
 
+	/**
+     * Récupère la liste de tous les articles.
+     */
 	@Override
 	public List<Article> findAll() {
         List<Article> articles = new ArrayList<>();
@@ -26,7 +29,7 @@ public class ArticleDao extends AbstractDao<Article> {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Article article = mapResultSetToArticle(rs);
+                Article article = mapResultSet(rs);
                 articles.add(article);
             }
         } catch (SQLException e) {
@@ -35,38 +38,48 @@ public class ArticleDao extends AbstractDao<Article> {
         return articles;
 	}
 
+	/**
+     * Recherche un article par son identifiant (IdArticle).
+     */
 	@Override
 	public Optional<Article> findById(int id) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
-
+	
+	/**
+     * Insère un nouvel article en base et met à jour son IdArticle généré (AUTO_INCREMENT).
+     */
 	@Override
 	public Article create(Article entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+     * Met à jour un article existant.
+     */
 	@Override
 	public boolean update(Article entity) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/**
+     * Supprime un article par son ID.
+     */
 	@Override
 	public boolean delete(int id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/**
+     * Méthode utilitaire pour convertir une ligne de ResultSet en objet Article.
+     * Implémentation de la méthode abstraite définie dans AbstractDao.
+     */
 	@Override
 	protected Article mapResultSet(ResultSet rs) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-    // Méthode utilitaire pour convertir une ligne de ResultSet en objet Article
-    private Article mapResultSetToArticle(ResultSet rs) throws SQLException {
         Article article = new Article();
         article.setIdArticle(rs.getInt("idArticle"));
         article.setDescription(rs.getString("description"));
