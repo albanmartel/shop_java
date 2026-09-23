@@ -15,7 +15,7 @@ CREATE TABLE article (
 	unitaryPrice		float(8)	NOT NULL DEFAULT 0
 );
 
-INSERT INTO T_Articles (IdArticle, Description, Brand, UnitaryPrice) VALUES
+INSERT INTO article (idArticle, description, brand, unitaryPrice) VALUES
 (1, 'Souris', 'Logitoch', 65),
 (2, 'Clavier', 'Microhard', 49.5),
 (3, 'Systeme d\'exploitation', 'Fenetres Vistouille', 150),
