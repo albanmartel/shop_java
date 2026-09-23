@@ -1,0 +1,52 @@
+@startuml
+
+class User {
+  + IdUser
+  + Login
+  + Password
+}
+
+class Customer {
+  + idCustomer
+  + name
+  + firstName
+  + email
+  + phone
+  + address
+  + IdUser
+}
+
+class Category {
+  + IdCategory
+  + CatName
+  + Description
+}
+
+class Article {
+  + IdArticle
+  + Description
+  + Brand
+  + UnitaryPrice
+}
+
+class Order {
+  + IdOrder
+  + Amount
+  + DateOrder
+}
+
+class OrderItem {
+  + UnitaryPrice
+  + Quantity
+}
+
+' Relations et multiplicités
+User "1" - "0..1" Customer : ETRE
+Customer "1" -- "*" Order : COMMANDER
+Category "0..1" -- "*" Article : CLASSER
+Article "1..*" -- "*" Order : CONTENIR
+
+' Classe d'association
+(Article, Order) .. OrderItem
+
+@enduml
