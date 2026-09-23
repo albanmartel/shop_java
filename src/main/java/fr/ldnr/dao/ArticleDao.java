@@ -66,7 +66,7 @@ public class ArticleDao extends AbstractDao<Article> {
      */
 	@Override
 	public Article create(Article entity) {
-        String sql = "INSERT INTO articles (description, brand, unitaryPrice) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO article (description, brand, unitaryPrice) VALUES (?, ?, ?)";
 
         try (Connection connection = getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
