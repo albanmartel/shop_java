@@ -1,6 +1,10 @@
 package fr.ldnr.jdbc;
 
+import java.io.NotActiveException;
 import java.math.BigDecimal;
+import java.util.Optional;
+
+import org.jooq.impl.QOM.Null;
 
 import fr.ldnr.dao.ArticleDao;
 import fr.ldnr.models.Article;
@@ -28,9 +32,20 @@ public class TestArticleDao {
         String messageString = "Suppression de l'article " + idArticle.toString();
         if (suppress_art) {
         	messageString += " a réussi";
+        	articleDao.updateAutoIncrement();
         } else {
         	messageString += " a échoué";
         }
+        System.out.println(messageString);
+	}
+	
+	public static void testDisplayArticleDetails(ArticleDao articleDao) {
+		System.out.println("--- Test d'affichage du détail d'un article ---");
+		Optional<Article> article = articleDao.findById(1);
+		String messageString = "Pas d'article à afficher";
+		if (article != null) {
+			messageString = article.toString();
+		}
         System.out.println(messageString);
 	}
 
@@ -38,6 +53,7 @@ public class TestArticleDao {
 		ArticleDao articleDao = new ArticleDao();
 		testCreateArticleDao(articleDao);
 		testDeleteArticleDao(articleDao);
+		testDisplayArticleDetails(articleDao);
 
 	}
 
