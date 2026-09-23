@@ -1,9 +1,9 @@
 -- ------------------------------------------------------------------------------
 -- - Reconstruction de la base de données                                     ---
 -- ------------------------------------------------------------------------------
-DROP DATABASE IF EXISTS Shop;
-CREATE DATABASE Shop;
-USE Shop;
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE shop;
+USE shop;
 
 -- -----------------------------------------------------------------------------
 -- - Construction de la tables des articles en vente                         ---
