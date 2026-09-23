@@ -142,5 +142,26 @@ public class ArticleDao extends AbstractDao<Article> {
         article.setUnitaryPrice(rs.getBigDecimal("UnitaryPrice"));
         return article;
     }
+	
+	/**
+	 * Permet de connaître l'id max de la table article.
+	 * @return L'id maximum, ou 0 si la table est vide / en cas d'erreur.
+	 */
+	public int maxId() {
+	    String sql = "SELECT COALESCE(MAX(idArticle), 0) AS max_id FROM article";
+
+	    try (Connection connection = getConnection();
+	         PreparedStatement stmt = connection.prepareStatement(sql);
+	         ResultSet rs = stmt.executeQuery()) {
+
+	        if (rs.next()) {
+	            return rs.getInt("max_id"); // ou rs.getInt(1)
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return 0;
+	}
 
 }
