@@ -8,9 +8,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-/* Gestion */
+/* Pour utiliser une liste ordonnée d'élements */
 import java.util.List;
+/* Permet de gérer les erreurs NUllPointerException*/
 import java.util.Optional;
+/* Librairier conçue pour travailler avec des dictionnaires clef / valeur */
 import java.util.Properties;
 
 public abstract class AbstractDao<T> {
@@ -47,7 +49,6 @@ public abstract class AbstractDao<T> {
     }
     
     
-
     /**
      * Ouvre et retourne une connexion JDBC.
      */
