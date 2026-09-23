@@ -45,7 +45,7 @@ CREATE TABLE categorie (
 -- SELECT IdArticle,article.Description,brand,UnitaryPrice,CatName FROM article 
 -- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
 
-CREATE TABLE T_Orders (
+CREATE TABLE order (
 	IdOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	Amount			float(4)	NOT NULL DEFAULT 0,
 	DateOrder 		DATE		NOT NULL DEFAULT NOW(),
@@ -64,7 +64,7 @@ CREATE TABLE T_Order_Items (
 	UnitaryPrice		FLOAT(4)	NOT NULL DEFAULT 0,
 	
 	IdOrder           INT(4)   NOT NULL,
-	FOREIGN KEY(IdOrder) REFERENCES T_Orders(IdOrder)
+	FOREIGN KEY(IdOrder) REFERENCES order(IdOrder)
 ) ENGINE = InnoDB;
 
 CREATE TABLE T_Users (
