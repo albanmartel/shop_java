@@ -36,9 +36,9 @@ CREATE TABLE categorie (
 );
 
 CREATE TABLE user (
-	idUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
+    idUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
 	login				varchar(20)	NOT NULL UNIQUE,
-	Password			varchar(20)	NOT NULL
+	password			varchar(20)	NOT NULL
 );
 
 CREATE TABLE customer (
@@ -52,22 +52,22 @@ CREATE TABLE customer (
 	FOREIGN KEY(idUser) REFERENCES user(idUser)
 );
 
-CREATE TABLE order (
-	idOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE customerOrder (
+	idcustomerOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	amount			float(4)	NOT NULL DEFAULT 0,
-	dateOrder 		DATE		NOT NULL DEFAULT NOW(),
+	datecustomerOrder 		DATE		NOT NULL DEFAULT NOW(),
 	idCustomer      INT(4)   	NOT NULL,
 	FOREIGN KEY(idCustomer) REFERENCES customer(idCustomer)
 );
 
-CREATE TABLE order_item (
-	idOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE customerOrder_item (
+	idcustomerOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	idArticle         INT(4)   NOT NULL,
-    idOrder           INT(4)   NOT NULL,
+    idcustomerOrder           INT(4)   NOT NULL,
 	Quantity		   FLOAT(4) NOT NULL DEFAULT 1,
 	unitaryPrice	FLOAT(4)	NOT NULL DEFAULT 0,
     FOREIGN KEY(idArticle) REFERENCES article(idArticle),
-	FOREIGN KEY(idOrder) REFERENCES order(idOrder)
+	FOREIGN KEY(idcustomerOrder) REFERENCES customerOrder(idcustomerOrder)
 );
 
 -- ALTER TABLE article ADD COLUMN idCategory INT(4);
@@ -77,5 +77,5 @@ CREATE TABLE order_item (
 -- from article inner join categorie where article.idCategory = categorie.idCategory and idArticle=1;
 
 -- SELECT idArticle,article.description,brand,unitaryPrice,CatName FROM article 
--- INNER JOIN categorie WHERE article.idCategory=categorie.idCategory AND idArticle>10 ORDER BY unitaryPrice;
+-- INNER JOIN categorie WHERE article.idCategory=categorie.idCategory AND idArticle>10 customerORDER BY unitaryPrice;
 -- SELECT * FROM article;
