@@ -50,11 +50,12 @@ public class ArticleDao {
 	/**
      * Insère un nouvel article en base et met à jour son IdArticle généré (AUTO_INCREMENT).
      */
-	@Override
-	public Article create(Article entity) {
-        String sql = "INSERT INTO article (description, brand, unitaryPrice) VALUES (?, ?, ?)";
-        
-        return entity;
+	public void create(String description, String brand, BigDecimal price) {
+        dsl.insertInto(ARTICLE)
+           .set(ARTICLE.DESCRIPTION, description)
+           .set(ARTICLE.BRAND, brand)
+           .set(ARTICLE.UNITARY_PRICE, price)
+           .execute();
     }
 
 	/**
