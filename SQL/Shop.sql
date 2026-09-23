@@ -15,18 +15,19 @@ CREATE TABLE article (
 	unitaryPrice		float(8)	NOT NULL DEFAULT 0
 );
 
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Souris' , 'Logitoch', 65 );
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Clavier' , 'Microhard', 49.5 );
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Systeme d''exploitation', 'Fenetres Vistouille', 150);
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Tapis souris','Chapeau Bleu',5 );
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Cle USB 8 To','Syno', 8 );
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Laptop' , 'PH', 1199);
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('CD x 500' ,'CETME', 250);
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('DVD-R x 100','CETME', 99);
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('DVD+R x 100' ,'CETME', 105);
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Batterie Laptop','PH', 80);
-INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Casque Audio','Syno',	105);
-INSERT INTO article ( description, brand ) VALUES ('WebCam', 'Logitoch', 88.74);
+INSERT INTO T_Articles (IdArticle, Description, Brand, UnitaryPrice) VALUES
+(1, 'Souris', 'Logitoch', 65),
+(2, 'Clavier', 'Microhard', 49.5),
+(3, 'Systeme d\'exploitation', 'Fenetres Vistouille', 150),
+(4, 'Tapis souris', 'Chapeau Bleu', 5),
+(5, 'Cle USB 8 To', 'Syno', 8),
+(6, 'Laptop', 'PH', 1199),
+(7, 'CD x 500', 'CETME', 250),
+(8, 'DVD-R x 100', 'CETME', 99),
+(9, 'DVD+R x 100', 'CETME', 105),
+(10, 'Batterie Laptop', 'PH', 80),
+(11, 'Casque Audio', 'Syno', 105),
+(12, 'WebCam', 'Logitoch', 88.74);
 
 CREATE TABLE categorie (
 	idCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
