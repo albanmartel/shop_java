@@ -26,7 +26,7 @@ INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('DVD-R x 100','
 INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('DVD+R x 100' ,'CETME', 105);
 INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Batterie Laptop','PH', 80);
 INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Casque Audio','Syno',	105);
-INSERT INTO article ( description, brand ) VALUES ('WebCam', 'Logitoch');
+INSERT INTO article ( description, brand ) VALUES ('WebCam', 'Logitoch', 88.74);
 
 CREATE TABLE categorie (
 	idCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
@@ -55,18 +55,18 @@ CREATE TABLE order (
 	idOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	amount			float(4)	NOT NULL DEFAULT 0,
 	dateOrder 		DATE		NOT NULL DEFAULT NOW(),
-	ddCustomer      INT(4)   	NOT NULL,
+	idCustomer      INT(4)   	NOT NULL,
 	FOREIGN KEY(idCustomer) REFERENCES customer(idCustomer)
 );
 
 CREATE TABLE order_item (
-	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
+	idOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	idArticle         INT(4)   NOT NULL,
     idOrder           INT(4)   NOT NULL,
 	Quantity		   FLOAT(4) NOT NULL DEFAULT 1,
 	unitaryPrice	FLOAT(4)	NOT NULL DEFAULT 0,
     FOREIGN KEY(idArticle) REFERENCES article(idArticle),
-	FOREIGN KEY(IdOrder) REFERENCES order(IdOrder)
+	FOREIGN KEY(idOrder) REFERENCES order(idOrder)
 );
 
 -- ALTER TABLE article ADD COLUMN idCategory INT(4);
