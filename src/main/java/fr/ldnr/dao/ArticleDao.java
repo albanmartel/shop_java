@@ -40,13 +40,26 @@ public class ArticleDao extends AbstractDao<Article> {
 	}
 
 	/**
-     * Recherche un article par son identifiant (IdArticle).
+     * Recherche un article par son identifiant (idArticle).
      */
 	@Override
-	public Optional<Article> findById(int id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
+	public Optional<Article> findById(int idArticle) {
+        String sql = "SELECT idArticle, description, brand, unitaryPrice FROM article WHERE idArticle = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, idArticle);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapResultSet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 	
 	/**
      * Insère un nouvel article en base et met à jour son IdArticle généré (AUTO_INCREMENT).
