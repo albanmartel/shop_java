@@ -54,7 +54,7 @@ CREATE TABLE order (
 ) ENGINE = InnoDB;
 
 
-CREATE TABLE T_Order_Items (
+CREATE TABLE order_item (
 	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
 	
 	IdArticle         INT(4)   NOT NULL,
