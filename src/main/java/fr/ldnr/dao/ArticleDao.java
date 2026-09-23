@@ -163,5 +163,23 @@ public class ArticleDao extends AbstractDao<Article> {
 
 	    return 0;
 	}
+	
+	/**
+	 * Aligne la valeur de l'AUTO_INCREMENT sur le maxId() + 1 (ou 1 si la table est vide).
+	 * @return true si la modification a réussi, false sinon.
+	 */
+	public boolean updateAutoIncrement() {
+	    int nextId = maxId() + 1;
+	    String sql = "ALTER TABLE article AUTO_INCREMENT = " + nextId;
 
+	    try (Connection connection = getConnection();
+	         Statement stmt = connection.createStatement()) {
+
+	        stmt.executeUpdate(sql);
+	        return true; // Si aucune SQLException n'est levée, l'opération a réussi
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 }
