@@ -93,19 +93,41 @@ public class ArticleDao extends AbstractDao<Article> {
      * Met à jour un article existant.
      */
 	@Override
-	public boolean update(Article entity) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean update(Article article) {
+        String sql = "UPDATE article SET description = ?, brand = ?, unitaryPrice = ? WHERE idArticle = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, article.getDescription());
+            stmt.setString(2, article.getBrand());
+            stmt.setBigDecimal(3, article.getUnitaryPrice());
+            stmt.setInt(4, article.getIdArticle());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 	/**
      * Supprime un article par son ID.
      */
 	@Override
-	public boolean delete(int id) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public boolean delete(int idArticle) {
+		String sql = "DELETE FROM article WHERE idArticle = ?";
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, idArticle);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 	/**
      * Méthode utilitaire pour convertir une ligne de ResultSet en objet Article.
