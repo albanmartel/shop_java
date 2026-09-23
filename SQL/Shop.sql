@@ -29,7 +29,7 @@ INSERT INTO article ( description, brand, unitaryPrice ) VALUES ('Casque Audio',
 INSERT INTO article ( description, brand ) VALUES ('WebCam', 'Logitoch');
 
 CREATE TABLE categorie (
-	IdCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
+	idCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
 	CatName VARCHAR(30) NOT NULL,
 	description VARCHAR(100) NOT NULL
 );
@@ -69,12 +69,12 @@ CREATE TABLE order_item (
 	FOREIGN KEY(IdOrder) REFERENCES order(IdOrder)
 );
 
--- ALTER TABLE article ADD COLUMN IdCategory INT(4);
--- ALTER TABLE article ADD FOREIGN KEY(IdCategory) REFERENCES categorie(IdCategory);
+-- ALTER TABLE article ADD COLUMN idCategory INT(4);
+-- ALTER TABLE article ADD FOREIGN KEY(idCategory) REFERENCES categorie(idCategory);
 
--- select idArticle,article.description,brand,unitaryPrice,article.IdCategory,CatName,categorie.description 
--- from article inner join categorie where article.IdCategory = categorie.IdCategory and idArticle=1;
+-- select idArticle,article.description,brand,unitaryPrice,article.idCategory,CatName,categorie.description 
+-- from article inner join categorie where article.idCategory = categorie.idCategory and idArticle=1;
 
 -- SELECT idArticle,article.description,brand,unitaryPrice,CatName FROM article 
--- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND idArticle>10 ORDER BY unitaryPrice;
+-- INNER JOIN categorie WHERE article.idCategory=categorie.idCategory AND idArticle>10 ORDER BY unitaryPrice;
 -- SELECT * FROM article;
