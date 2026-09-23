@@ -19,6 +19,42 @@ Aussi, reprenez l’exemple vu en cours sans oublier d’ajouter le driver Maria
 git clone https://github.com/albanmartel/shop_java.git
 ```
 
+## Sécuriser la connexion à la base de donnée
+
+Pour sécuriser l'accès à la base de données, il est courant d'utiliser le fichier `env.properties`
+
+Le fichier `env.properties.example` : 
+```txt
+# Fichier d'exemple - Copier sous le nom env.properties et remplir vos accès
+db.url=jdbc:mariadb://localhost:3306/votre_base
+db.user=votre_user
+db.password=votre_mot_de_passe
+db.name=votre_base
+```
+
+Il est à renommer en `env.properties` et à personnaliser avec vos propriétés d'accès à votre base MariaDB.
+
+
+## Importer le script SQL dans la base de données MariaDB
+
+**L'installation de MariaDb n'est pas abordée dans ce document** mais elle est indispensable.
+Pour que les opérations fonctionnent il faut que le mot de passe MariaDB ne soit pas vide.
+
+### 1. **Windows** Importer depuis PowerShell
+
+```PowerShell
+cd "SQL"
+Get-Content .\Shop.sql | mariadb -u root -p
+```
+
+### 1. **Linux** Importer depuis bash
+
+```bash
+cd "SQL"
+mariadb -u root -p < Shop.sql
+```
+
+
 ## Exécuter le projet 
 
 *Nécessite l'installation d'`Apache Maven`*
