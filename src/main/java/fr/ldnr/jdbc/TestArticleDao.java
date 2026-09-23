@@ -23,7 +23,7 @@ public class TestArticleDao {
 	
 	public static void testDeleteArticleDao(ArticleDao articleDao) {
 		System.out.println("--- Test de Suppression ---");
-        Integer idArticle = 13;
+        Integer idArticle = articleDao.maxId();
         boolean suppress_art = articleDao.delete(idArticle);
         String messageString = "Suppression de l'article " + idArticle.toString();
         if (suppress_art) {
