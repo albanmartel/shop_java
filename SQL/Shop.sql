@@ -51,7 +51,7 @@ CREATE TABLE order (
 	Amount			float(4)	NOT NULL DEFAULT 0,
 	DateOrder 		DATE		NOT NULL DEFAULT NOW(),
 	IdCustomer      INT(4)   	NOT NULL,
-	FOREIGN KEY(IdCustomer) REFERENCES T_Customers(IdCustomer)
+	FOREIGN KEY(IdCustomer) REFERENCES customer(IdCustomer)
 );
 
 
@@ -71,7 +71,7 @@ CREATE TABLE user (
 	Password			varchar(20)	NOT NULL
 );
 
-CREATE TABLE T_Customers (
+CREATE TABLE customer (
 	id					int(10)			PRIMARY KEY AUTO_INCREMENT,
 	name				varchar(20) 	NOT NULL,
 	firstName			varchar(20) 	NOT NULL,
