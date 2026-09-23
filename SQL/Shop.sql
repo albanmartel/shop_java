@@ -9,7 +9,7 @@ USE shop;
 -- - Construction de la tables des articles en vente                         ---
 -- -----------------------------------------------------------------------------
 CREATE TABLE article (
-	IdArticle			int(4)		PRIMARY KEY AUTO_INCREMENT,
+	idArticle			int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Description			varchar(30)	NOT NULL,
 	Brand				varchar(30)	NOT NULL,
 	UnitaryPrice		float(8)	NOT NULL DEFAULT 0
@@ -61,20 +61,20 @@ CREATE TABLE order (
 
 CREATE TABLE order_item (
 	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
-	IdArticle         INT(4)   NOT NULL,
+	idArticle         INT(4)   NOT NULL,
     idOrder           INT(4)   NOT NULL,
 	Quantity		   FLOAT(4) NOT NULL DEFAULT 1,
 	UnitaryPrice	FLOAT(4)	NOT NULL DEFAULT 0,
-    FOREIGN KEY(IdArticle) REFERENCES article(IdArticle),
+    FOREIGN KEY(idArticle) REFERENCES article(idArticle),
 	FOREIGN KEY(IdOrder) REFERENCES order(IdOrder)
 );
 
 -- ALTER TABLE article ADD COLUMN IdCategory INT(4);
 -- ALTER TABLE article ADD FOREIGN KEY(IdCategory) REFERENCES categorie(IdCategory);
 
--- select IdArticle,article.Description,Brand,UnitaryPrice,article.IdCategory,CatName,categorie.Description 
--- from article inner join categorie where article.IdCategory = categorie.IdCategory and IdArticle=1;
+-- select idArticle,article.Description,Brand,UnitaryPrice,article.IdCategory,CatName,categorie.Description 
+-- from article inner join categorie where article.IdCategory = categorie.IdCategory and idArticle=1;
 
--- SELECT IdArticle,article.Description,brand,UnitaryPrice,CatName FROM article 
--- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
+-- SELECT idArticle,article.Description,brand,UnitaryPrice,CatName FROM article 
+-- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND idArticle>10 ORDER BY UnitaryPrice;
 -- SELECT * FROM article;
