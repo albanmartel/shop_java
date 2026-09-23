@@ -9,7 +9,6 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>shop_java</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
@@ -29,29 +28,36 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
   <dependencies>
+    <!-- MariaDB JDBC Driver -->
     <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
       <version>3.5.3</version>
     </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <scope>test</scope>
-    </dependency>
+
+    <!-- Lombok (Compilateur / Annotation Processor) -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.38</version>
       <scope>provided</scope>
     </dependency>
+
+    <!-- jOOQ Codegen -->
     <dependency>
       <groupId>org.jooq</groupId>
       <artifactId>jooq-codegen</artifactId>
       <version>3.20.3</version>
     </dependency>
-    <!-- Optionally: parameterized tests support -->
+
+    <!-- JUnit 5 Tests -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
@@ -60,68 +66,79 @@
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to
-      parent pom) -->
+    <plugins>
+      <!-- 1. Plugin de compilation configuré pour traiter l'annotation Lombok -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>1.18.38</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+
+      <!-- 2. Reading env.properties depuis src/main/resources/env.properties -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>properties-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <phase>initialize</phase>
+            <goals>
+              <goal>read-project-properties</goal>
+            </goals>
+            <configuration>
+              <files>
+                <file>src/main/resources/env.properties</file>
+              </files>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 3. Plugin jOOQ Codegen Maven -->
+      <plugin>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-codegen-maven</artifactId>
+        <version>3.19.11</version>
+        <configuration>
+          <jdbc>
+            <driver>org.mariadb.jdbc.Driver</driver>
+            <url>${db.url}</url>
+            <user>${db.user}</user>
+            <password>${db.password}</password>
+          </jdbc>
+          <generator>
+            <database>
+              <name>org.jooq.meta.mariadb.MariaDBDatabase</name>
+              <includes>.*</includes>
+              <inputSchema>${db.name}</inputSchema>
+            </database>
+            <target>
+              <packageName>fr.ldnr.shop.jooq</packageName>
+              <directory>target/generated-sources/jooq</directory>
+            </target>
+          </generator>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <pluginManagement>
       <plugins>
-        <!-- 1. Plugin pour lire le fichier env.properties au début du build (phase initialize) -->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>properties-maven-plugin</artifactId>
-          <version>1.2.1</version>
-          <executions>
-            <execution>
-              <phase>initialize</phase>
-              <goals>
-                <goal>read-project-properties</goal>
-              </goals>
-              <configuration>
-                <files>
-                  <file>env.properties</file>
-                </files>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-        <!-- 2. Plugin jOOQ qui réutilise les propriétés dynamiques ${db.url}, ${db.user}, etc. -->
-        <plugin>
-          <groupId>org.jooq</groupId>
-          <artifactId>jooq-codegen-maven</artifactId>
-          <version>3.19.11</version>
-          <configuration>
-            <jdbc>
-              <driver>org.mariadb.jdbc.Driver</driver>
-              <url>${db.url}</url>
-              <user>${db.user}</user>
-              <password>${db.password}</password>
-            </jdbc>
-            <generator>
-              <database>
-                <name>org.jooq.meta.mariadb.MariaDBDatabase</name>
-                <includes>.*</includes>
-                <inputSchema>${db.name}</inputSchema>
-              </database>
-              <target>
-                <packageName>fr.ldnr.shop.jooq</packageName>
-                <directory>target/generated-sources/jooq</directory>
-              </target>
-            </generator>
-          </configuration>
-        </plugin>
-        <!-- clean lifecycle, see
-        https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.4.0</version>
         </plugin>
-        <!-- default lifecycle, jar packaging: see
-        https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
           <version>3.3.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -138,16 +155,6 @@
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>3.1.2</version>
-        </plugin>
-        <!-- site lifecycle, see
-        https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.12.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.6.1</version>
         </plugin>
       </plugins>
     </pluginManagement>
