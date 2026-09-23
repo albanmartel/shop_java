@@ -98,11 +98,21 @@ public class ArticleDao {
         return max != null ? max : 0;
     }
 	
-	/**
-	 * Aligne la valeur de l'AUTO_INCREMENT sur le maxId() + 1 (ou 1 si la table est vide).
-	 * @return true si la modification a réussi, false sinon.
-	 */
-	public boolean updateAutoIncrement() {
-	        return false;
-	}
+    /**
+     * Aligne la valeur de l'AUTO_INCREMENT sur le maxId() + 1.
+     * @return true si la modification a réussi, false sinon.
+     */
+    public boolean updateAutoIncrement() {
+        try {
+            int nextId = maxId() + 1;
+            // Requête DDL via jOOQ
+            dsl.alterTable(ARTICLE)
+               .autoIncrementTo(nextId)
+               .execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
