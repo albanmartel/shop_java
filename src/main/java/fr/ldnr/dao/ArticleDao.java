@@ -42,9 +42,10 @@ public class ArticleDao {
 	/**
      * Recherche un article par son identifiant (idArticle).
      */
-	public Optional<Article> findById(int idArticle) {
-        String sql = "SELECT idArticle, description, brand, unitaryPrice FROM article WHERE idArticle = ?";
-        return null;
+	public ArticleRecord findById(int id) {
+        return dsl.selectFrom(ARTICLE)
+                  .where(ARTICLE.ID_ARTICLE.eq(id))
+                  .fetchOne();
     }
 	
 	/**
