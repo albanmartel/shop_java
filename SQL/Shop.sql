@@ -30,20 +30,20 @@ INSERT INTO article ( Description, Brand ) VALUES ( 'WebCam'      , 	'Logitoch' 
 
 SELECT * FROM article;
 
-CREATE TABLE T_Categories (
+CREATE TABLE categorie (
 	IdCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
 	CatName VARCHAR(30) NOT NULL,
 	Description VARCHAR(100) NOT NULL
  )
 
 -- ALTER TABLE article ADD COLUMN IdCategory INT(4);
--- ALTER TABLE article ADD FOREIGN KEY(IdCategory) REFERENCES T_Categories(IdCategory);
+-- ALTER TABLE article ADD FOREIGN KEY(IdCategory) REFERENCES categorie(IdCategory);
 
--- select IdArticle,article.Description,Brand,UnitaryPrice,article.IdCategory,CatName,T_Categories.Description 
--- from article inner join t_categories where article.IdCategory = t_categories.IdCategory and IdArticle=1;
+-- select IdArticle,article.Description,Brand,UnitaryPrice,article.IdCategory,CatName,categorie.Description 
+-- from article inner join categorie where article.IdCategory = categorie.IdCategory and IdArticle=1;
 
 -- SELECT IdArticle,article.Description,brand,UnitaryPrice,CatName FROM article 
--- INNER JOIN t_categories WHERE article.IdCategory=t_categories.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
+-- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
 
 CREATE TABLE T_Orders (
 	IdOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
