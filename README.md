@@ -176,8 +176,60 @@ demo-maven
     └── test
         └── java
 ```
+#### 2.2 Ajouter le chemin d'exécution de la classe principale au `pom.xml`
 
-#### 2.2. Permettre à `pom.xml` de lire les paramètres de connexion à la BDD
+Se rendre dans le répertoire du projet
+```
+cd demo-maven
+```
+
+##### 2.2.1 Editer `pom.xml`
+
+Dans la parties properties de `pom.xml`.
+
+Il faut ajouter le chemin d'exécution du point d'entrée du projet :
+
+```XML
+<properties>
+  <exec.mainClass>fr.exemple.App</exec.mainClass>
+</properties>
+```
+
+**Sans cette directive `mvn exec:java` ne permet pas de lancer l'application**
+
+#### 2.3. Compiler et exécuter `Hello word`
+
+```
+mvn compile exec:java
+[INFO] Scanning for projects...
+[INFO] Loaded 23863 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] Loaded 74 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO]
+[INFO] --------------------------------------------------< fr.ldnr:shop_java >---------------------------------------------------
+[INFO] Building shop_java 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] ---------------------------------------------------------[ jar ]----------------------------------------------------------
+[INFO]
+[INFO] --- resources:3.3.1:resources (default-resources) @ shop_java ---
+[INFO] skip non existing resourceDirectory C:\Users\Martela\OneDrive - Facylities Multi Services\Documents\12-DEV-JAVA-003 - Java Avance\2-exercices\shop_java\src\main\resources
+[INFO]
+[INFO] --- compiler:3.13.0:compile (default-compile) @ shop_java ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug release 17] to target\classes
+[INFO]
+[INFO] --- exec:3.6.4:java (default-cli) @ shop_java ---
+[INFO] Loaded 50 auto-discovered prefixes for remote repository ow2-snapshot (prefixes-ow2-snapshot.txt)
+[INFO] [stdout] Hello World!
+[INFO] --------------------------------------------------------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] --------------------------------------------------------------------------------------------------------------------------
+[INFO] Total time:  2.212 s
+[INFO] Finished at: 2026-09-23T14:13:51+02:00
+[INFO] --------------------------------------------------------------------------------------------------------------------------
+```
+
+
+#### 2.4. Permettre à `pom.xml` de lire les paramètres de connexion à la BDD
 
 Pour que le projet puisse lire les variables d'environnement écrites dasn env.properties, il est nécesssaire d'ajouter le plugin
 org.codehaus.mojo.
@@ -206,7 +258,7 @@ J'ai ajouter ceci:
     </plugin>
 ```
 
-#### 2.3. Rechercher des dépendances JAVA
+#### 2.5. Rechercher des dépendances JAVA
 
 **Windows**
 
@@ -240,7 +292,7 @@ org.mariadb.jdbc            mariadb-java-client-jre7 1.6.1
 org.mariadb.jdbc            mariadb-java-client-jre6 1.6.1
 ```
 
-#### 2.3 Ajouter des dépendances JAVA à `pom.xml`
+#### 2.6. Ajouter des dépendances JAVA à `pom.xml`
 
 Le `pom.xml` est le cœur de tout projet Maven. 
 
@@ -260,7 +312,7 @@ L'ajout traditionnel d'un nouvelle dépendance ce fait en général en éditant 
 </dependencies>
 ```
 
-##### 2.4. **Ajouter des plugins JAVA à `pom.xml`**
+##### 2.7. **Ajouter des plugins JAVA à `pom.xml`**
 
 <build>
   <plugins>
@@ -275,11 +327,11 @@ L'ajout traditionnel d'un nouvelle dépendance ce fait en général en éditant 
   </plugins>
 </build>
 
-##### 2.3.2. **Maven ne permet pas d'ajouter au `pom.xml` de dépendance**
+##### 2.8. **Maven ne permet pas d'ajouter au `pom.xml` de dépendance**
 
 Remarque: à ce jour (Mercredi 23 Septembre 2026 ), Maven ne permet pas d'ajouter automatiquement des dépendances à `pom.xml`.
 
-#### 2.4 Installer les dépendances JAVA avec `maven`
+#### 2.9 Installer les dépendances JAVA avec `maven`
 
 Maven permet d'éviter de copier manuellement les fichiers `.jar` dans un dossier `lib`.
 
@@ -294,7 +346,7 @@ Cette commande va notamment :
 - les placer dans `.m2\repository` ;
 - compiler les fichiers Java dans `target\classes`.
 
-#### 2.5 Voir les dépendances utilisée avec `Maven`
+#### 2.9 Voir les dépendances utilisée avec `Maven`
 
 Vous pouvez voir les dépendances effectivement utilisées avec :
 
@@ -302,7 +354,7 @@ Vous pouvez voir les dépendances effectivement utilisées avec :
 mvn dependency:tree
 ```
 
-#### 2.6 Forcer Maven a vérifier des mises-à-jour
+#### 2.10. Forcer Maven a vérifier des mises-à-jour
 
 Pour forcer Maven à vérifier les mises à jour :
 
