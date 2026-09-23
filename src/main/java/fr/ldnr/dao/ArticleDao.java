@@ -1,19 +1,11 @@
 package fr.ldnr.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import fr.ldnr.models.Article;
 
 import static fr.ldnr.shop.jooq.Tables.ARTICLE;
 import fr.ldnr.shop.jooq.tables.records.ArticleRecord;
 import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -44,7 +36,7 @@ public class ArticleDao {
      */
 	public ArticleRecord findById(int id) {
         return dsl.selectFrom(ARTICLE)
-                  .where(ARTICLE.ID_ARTICLE.eq(id))
+                  .where(ARTICLE.IDARTICLE.eq(id))
                   .fetchOne();
     }
 	
@@ -55,7 +47,7 @@ public class ArticleDao {
         dsl.insertInto(ARTICLE)
            .set(ARTICLE.DESCRIPTION, description)
            .set(ARTICLE.BRAND, brand)
-           .set(ARTICLE.UNITARY_PRICE, price)
+           .set(ARTICLE.UNITARYPRICE, price)
            .execute();
     }
 
@@ -72,26 +64,17 @@ public class ArticleDao {
      */
 	public void delete(int id) {
         dsl.deleteFrom(ARTICLE)
-           .where(ARTICLE.ID_ARTICLE.eq(id))
+           .where(ARTICLE.IDARTICLE.eq(id))
            .execute();
     }
 
-	/**
-     * Méthode utilitaire pour convertir une ligne de ResultSet en objet Article.
-     * Implémentation de la méthode abstraite définie dans AbstractDao.
-     */
-	@Override
-	protected Article mapResultSet(ResultSet rs) throws SQLException {
-        Article article = new Article();
-        return article;
-    }
-	
+
 	/**
      * Permet de connaître l'id max de la table article.
      * @return L'id maximum, ou 0 si la table est vide / en cas d'erreur.
      */
     public int maxId() {
-        Integer max = dsl.select(DSL.coalesce(ARTICLE.ID_ARTICLE.max(), 0))
+        Integer max = dsl.select(DSL.coalesce(ARTICLE.IDARTICLE.max(), 0))
                          .from(ARTICLE)
                          .fetchOneInto(Integer.class);
                          
@@ -105,10 +88,8 @@ public class ArticleDao {
     public boolean updateAutoIncrement() {
         try {
             int nextId = maxId() + 1;
-            // Requête DDL via jOOQ
-            dsl.alterTable(ARTICLE)
-               .autoIncrementTo(nextId)
-               .execute();
+            // Utilisation de query brute sécurisée via jOOQ
+            dsl.query("ALTER TABLE article AUTO_INCREMENT = ?", nextId).execute();
             return true;
         } catch (Exception e) {
             e.printStackTrace();
