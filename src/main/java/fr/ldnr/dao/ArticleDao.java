@@ -87,14 +87,16 @@ public class ArticleDao {
     }
 	
 	/**
-	 * Permet de connaître l'id max de la table article.
-	 * @return L'id maximum, ou 0 si la table est vide / en cas d'erreur.
-	 */
-	public int maxId() {
-	    String sql = "SELECT COALESCE(MAX(idArticle), 0) AS max_id FROM article";
-
-	    return 0;
-	}
+     * Permet de connaître l'id max de la table article.
+     * @return L'id maximum, ou 0 si la table est vide / en cas d'erreur.
+     */
+    public int maxId() {
+        Integer max = dsl.select(DSL.coalesce(ARTICLE.ID_ARTICLE.max(), 0))
+                         .from(ARTICLE)
+                         .fetchOneInto(Integer.class);
+                         
+        return max != null ? max : 0;
+    }
 	
 	/**
 	 * Aligne la valeur de l'AUTO_INCREMENT sur le maxId() + 1 (ou 1 si la table est vide).
