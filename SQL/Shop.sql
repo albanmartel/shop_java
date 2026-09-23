@@ -67,7 +67,7 @@ CREATE TABLE order_item (
 	FOREIGN KEY(IdOrder) REFERENCES order(IdOrder)
 ) ENGINE = InnoDB;
 
-CREATE TABLE T_Users (
+CREATE TABLE user (
 	IdUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Login				varchar(20)	NOT NULL UNIQUE,
 	Password			varchar(20)	NOT NULL
@@ -81,5 +81,5 @@ CREATE TABLE T_Customers (
 	phone				varchar(45) 	NOT NULL,
 	address				varchar(90) 	NOT NULL,
 	IdUser           	INT(4)   NOT NULL,
-	FOREIGN KEY(IdUser) REFERENCES T_Users(IdUser)	
+	FOREIGN KEY(IdUser) REFERENCES user(IdUser)	
 ) ENGINE = InnoDB;
