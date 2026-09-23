@@ -35,7 +35,7 @@ CREATE TABLE categorie (
 );
 
 CREATE TABLE user (
-	IdUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
+	idUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
 	Login				varchar(20)	NOT NULL UNIQUE,
 	Password			varchar(20)	NOT NULL
 );
@@ -47,8 +47,8 @@ CREATE TABLE customer (
 	email				varchar(45) 	NOT NULL,
 	phone				varchar(45) 	NOT NULL,
 	address				varchar(90) 	NOT NULL,
-	IdUser           	INT(4)   NOT NULL,
-	FOREIGN KEY(IdUser) REFERENCES user(IdUser)
+	idUser           	INT(4)   NOT NULL,
+	FOREIGN KEY(idUser) REFERENCES user(idUser)
 );
 
 CREATE TABLE order (
