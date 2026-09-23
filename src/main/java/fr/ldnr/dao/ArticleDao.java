@@ -11,6 +11,13 @@ import java.util.Optional;
 
 import fr.ldnr.models.Article;
 
+import static fr.ldnr.shop.jooq.Tables.ARTICLE;
+import fr.ldnr.shop.jooq.tables.records.ArticleRecord;
+import org.jooq.DSLContext;
+
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
  * Classe pour faire la liaison entre les objets Poo et la BDD
  * ArticleDao s'occupe de la classe Article
@@ -23,19 +30,6 @@ public class ArticleDao extends AbstractDao<Article> {
 	@Override
 	public List<Article> findAll() {
         List<Article> articles = new ArrayList<>();
-        String sql = "SELECT idArticle, description, brand, unitaryPrice FROM article;";
-
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-
-            while (rs.next()) {
-                Article article = mapResultSet(rs);
-                articles.add(article);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return articles;
 	}
 
@@ -45,20 +39,7 @@ public class ArticleDao extends AbstractDao<Article> {
 	@Override
 	public Optional<Article> findById(int idArticle) {
         String sql = "SELECT idArticle, description, brand, unitaryPrice FROM article WHERE idArticle = ?";
-
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-
-            stmt.setInt(1, idArticle);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return Optional.of(mapResultSet(rs));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return Optional.empty();
+        return null;
     }
 	
 	/**
@@ -67,25 +48,7 @@ public class ArticleDao extends AbstractDao<Article> {
 	@Override
 	public Article create(Article entity) {
         String sql = "INSERT INTO article (description, brand, unitaryPrice) VALUES (?, ?, ?)";
-
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setString(1, entity.getDescription());
-            stmt.setString(2, entity.getBrand());
-            stmt.setBigDecimal(3, entity.getUnitaryPrice());
-
-            stmt.executeUpdate();
-
-            // Récupération de l'ID généré automatiquement
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    entity.setIdArticle(generatedKeys.getInt(1));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        
         return entity;
     }
 
@@ -96,19 +59,7 @@ public class ArticleDao extends AbstractDao<Article> {
 	public boolean update(Article article) {
         String sql = "UPDATE article SET description = ?, brand = ?, unitaryPrice = ? WHERE idArticle = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-
-            stmt.setString(1, article.getDescription());
-            stmt.setString(2, article.getBrand());
-            stmt.setBigDecimal(3, article.getUnitaryPrice());
-            stmt.setInt(4, article.getIdArticle());
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
             return false;
-        }
     }
 
 	/**
@@ -117,16 +68,7 @@ public class ArticleDao extends AbstractDao<Article> {
 	@Override
 	public boolean delete(int idArticle) {
 		String sql = "DELETE FROM article WHERE idArticle = ?";
-
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-
-            stmt.setInt(1, idArticle);
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
             return false;
-        }
     }
 
 	/**
@@ -136,10 +78,6 @@ public class ArticleDao extends AbstractDao<Article> {
 	@Override
 	protected Article mapResultSet(ResultSet rs) throws SQLException {
         Article article = new Article();
-        article.setIdArticle(rs.getInt("idArticle"));
-        article.setDescription(rs.getString("description"));
-        article.setBrand(rs.getString("brand"));
-        article.setUnitaryPrice(rs.getBigDecimal("UnitaryPrice"));
         return article;
     }
 	
@@ -150,17 +88,6 @@ public class ArticleDao extends AbstractDao<Article> {
 	public int maxId() {
 	    String sql = "SELECT COALESCE(MAX(idArticle), 0) AS max_id FROM article";
 
-	    try (Connection connection = getConnection();
-	         PreparedStatement stmt = connection.prepareStatement(sql);
-	         ResultSet rs = stmt.executeQuery()) {
-
-	        if (rs.next()) {
-	            return rs.getInt("max_id"); // ou rs.getInt(1)
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
 	    return 0;
 	}
 	
@@ -169,17 +96,6 @@ public class ArticleDao extends AbstractDao<Article> {
 	 * @return true si la modification a réussi, false sinon.
 	 */
 	public boolean updateAutoIncrement() {
-	    int nextId = maxId() + 1;
-	    String sql = "ALTER TABLE article AUTO_INCREMENT = " + nextId;
-
-	    try (Connection connection = getConnection();
-	         Statement stmt = connection.createStatement()) {
-
-	        stmt.executeUpdate(sql);
-	        return true; // Si aucune SQLException n'est levée, l'opération a réussi
-	    } catch (SQLException e) {
-	        e.printStackTrace();
 	        return false;
-	    }
 	}
 }
