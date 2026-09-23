@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +23,7 @@ public class ArticleDao extends AbstractDao<Article> {
 	@Override
 	public List<Article> findAll() {
         List<Article> articles = new ArrayList<>();
-        String sql = "SELECT IdArticle, Description, Brand, UnitaryPrice FROM T_Articles";
+        String sql = "SELECT idArticle, description, brand, unitaryPrice FROM article;";
 
         try (Connection connection = getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql);
@@ -52,9 +53,28 @@ public class ArticleDao extends AbstractDao<Article> {
      */
 	@Override
 	public Article create(Article entity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        String sql = "INSERT INTO articles (description, brand, unitaryPrice) VALUES (?, ?, ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, entity.getDescription());
+            stmt.setString(2, entity.getBrand());
+            stmt.setBigDecimal(3, entity.getUnitaryPrice());
+
+            stmt.executeUpdate();
+
+            // Récupération de l'ID généré automatiquement
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    entity.setIdArticle(generatedKeys.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return entity;
+    }
 
 	/**
      * Met à jour un article existant.
