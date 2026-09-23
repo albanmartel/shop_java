@@ -277,7 +277,7 @@ L'ajout traditionnel d'un nouvelle dépendance ce fait en général en éditant 
 
 ##### 2.3.2. **Maven ne permet pas d'ajouter au `pom.xml` de dépendance**
 
-
+Remarque: à ce jour (Mercredi 23 Septembre 2026 ), Maven ne permet pas d'ajouter automatiquement des dépendances à `pom.xml`.
 
 #### 2.4 Installer les dépendances JAVA avec `maven`
 
