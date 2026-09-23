@@ -43,12 +43,13 @@ public class ArticleDao {
 	/**
      * Insère un nouvel article en base et met à jour son IdArticle généré (AUTO_INCREMENT).
      */
-	public void create(String description, String brand, BigDecimal price) {
+	public ArticleRecord create(String description, String brand, BigDecimal price) {
         dsl.insertInto(ARTICLE)
            .set(ARTICLE.DESCRIPTION, description)
            .set(ARTICLE.BRAND, brand)
            .set(ARTICLE.UNITARYPRICE, price)
-           .execute();
+           .returning()
+           .fetchOne();
     }
 
 	/**
@@ -62,10 +63,11 @@ public class ArticleDao {
 	/**
      * Supprime un article par son ID.
      */
-	public void delete(int id) {
-        dsl.deleteFrom(ARTICLE)
+	public boolean delete(int id) {
+		int rowsDeleted = dsl.deleteFrom(ARTICLE)
            .where(ARTICLE.IDARTICLE.eq(id))
            .execute();
+        return rowsDeleted > 0;
     }
 
 
