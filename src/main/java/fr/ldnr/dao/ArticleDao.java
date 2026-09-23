@@ -70,10 +70,10 @@ public class ArticleDao {
 	/**
      * Supprime un article par son ID.
      */
-	@Override
-	public boolean delete(int idArticle) {
-		String sql = "DELETE FROM article WHERE idArticle = ?";
-            return false;
+	public void delete(int id) {
+        dsl.deleteFrom(ARTICLE)
+           .where(ARTICLE.ID_ARTICLE.eq(id))
+           .execute();
     }
 
 	/**
