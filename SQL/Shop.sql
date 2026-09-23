@@ -10,28 +10,28 @@ USE shop;
 -- -----------------------------------------------------------------------------
 CREATE TABLE article (
 	idArticle			int(4)		PRIMARY KEY AUTO_INCREMENT,
-	Description			varchar(30)	NOT NULL,
+	description			varchar(30)	NOT NULL,
 	Brand				varchar(30)	NOT NULL,
 	UnitaryPrice		float(8)	NOT NULL DEFAULT 0
 );
 
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Souris' , 'Logitoch', 65 );
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Clavier' , 'Microhard', 49.5 );
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Systeme d''exploitation', 'Fenetres Vistouille', 150);
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Tapis souris','Chapeau Bleu',5 );
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Cle USB 8 To','Syno', 8 );
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Laptop' , 'PH', 1199);
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('CD x 500' ,'CETME', 250);
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('DVD-R x 100','CETME', 99);
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('DVD+R x 100' ,'CETME', 105);
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Batterie Laptop','PH', 80);
-INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Casque Audio','Syno',	105);
-INSERT INTO article ( Description, Brand ) VALUES ('WebCam', 'Logitoch');
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Souris' , 'Logitoch', 65 );
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Clavier' , 'Microhard', 49.5 );
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Systeme d''exploitation', 'Fenetres Vistouille', 150);
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Tapis souris','Chapeau Bleu',5 );
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Cle USB 8 To','Syno', 8 );
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Laptop' , 'PH', 1199);
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('CD x 500' ,'CETME', 250);
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('DVD-R x 100','CETME', 99);
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('DVD+R x 100' ,'CETME', 105);
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Batterie Laptop','PH', 80);
+INSERT INTO article ( description, Brand, UnitaryPrice ) VALUES ('Casque Audio','Syno',	105);
+INSERT INTO article ( description, Brand ) VALUES ('WebCam', 'Logitoch');
 
 CREATE TABLE categorie (
 	IdCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
 	CatName VARCHAR(30) NOT NULL,
-	Description VARCHAR(100) NOT NULL
+	description VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE user (
@@ -72,9 +72,9 @@ CREATE TABLE order_item (
 -- ALTER TABLE article ADD COLUMN IdCategory INT(4);
 -- ALTER TABLE article ADD FOREIGN KEY(IdCategory) REFERENCES categorie(IdCategory);
 
--- select idArticle,article.Description,Brand,UnitaryPrice,article.IdCategory,CatName,categorie.Description 
+-- select idArticle,article.description,Brand,UnitaryPrice,article.IdCategory,CatName,categorie.description 
 -- from article inner join categorie where article.IdCategory = categorie.IdCategory and idArticle=1;
 
--- SELECT idArticle,article.Description,brand,UnitaryPrice,CatName FROM article 
+-- SELECT idArticle,article.description,brand,UnitaryPrice,CatName FROM article 
 -- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND idArticle>10 ORDER BY UnitaryPrice;
 -- SELECT * FROM article;
