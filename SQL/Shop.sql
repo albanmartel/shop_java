@@ -28,41 +28,10 @@ INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Batterie Lapto
 INSERT INTO article ( Description, Brand, UnitaryPrice ) VALUES ('Casque Audio','Syno',	105);
 INSERT INTO article ( Description, Brand ) VALUES ('WebCam', 'Logitoch');
 
-
-
 CREATE TABLE categorie (
 	IdCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
 	CatName VARCHAR(30) NOT NULL,
 	Description VARCHAR(100) NOT NULL
- )
-
--- ALTER TABLE article ADD COLUMN IdCategory INT(4);
--- ALTER TABLE article ADD FOREIGN KEY(IdCategory) REFERENCES categorie(IdCategory);
-
--- select IdArticle,article.Description,Brand,UnitaryPrice,article.IdCategory,CatName,categorie.Description 
--- from article inner join categorie where article.IdCategory = categorie.IdCategory and IdArticle=1;
-
--- SELECT IdArticle,article.Description,brand,UnitaryPrice,CatName FROM article 
--- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
--- SELECT * FROM article;
-
-CREATE TABLE order (
-	IdOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
-	Amount			float(4)	NOT NULL DEFAULT 0,
-	DateOrder 		DATE		NOT NULL DEFAULT NOW(),
-	IdCustomer      INT(4)   	NOT NULL,
-	FOREIGN KEY(IdCustomer) REFERENCES customer(IdCustomer)
-);
-
-
-CREATE TABLE order_item (
-	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
-	IdArticle         INT(4)   NOT NULL,
-    idOrder           INT(4)   NOT NULL,
-	Quantity		   FLOAT(4) NOT NULL DEFAULT 1,
-	UnitaryPrice	FLOAT(4)	NOT NULL DEFAULT 0,
-    FOREIGN KEY(IdArticle) REFERENCES article(IdArticle),
-	FOREIGN KEY(IdOrder) REFERENCES order(IdOrder)
 );
 
 CREATE TABLE user (
@@ -81,3 +50,31 @@ CREATE TABLE customer (
 	IdUser           	INT(4)   NOT NULL,
 	FOREIGN KEY(IdUser) REFERENCES user(IdUser)
 );
+
+CREATE TABLE order (
+	IdOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
+	Amount			float(4)	NOT NULL DEFAULT 0,
+	DateOrder 		DATE		NOT NULL DEFAULT NOW(),
+	IdCustomer      INT(4)   	NOT NULL,
+	FOREIGN KEY(IdCustomer) REFERENCES customer(IdCustomer)
+);
+
+CREATE TABLE order_item (
+	IdOrderItem			int(4)	PRIMARY KEY AUTO_INCREMENT,
+	IdArticle         INT(4)   NOT NULL,
+    idOrder           INT(4)   NOT NULL,
+	Quantity		   FLOAT(4) NOT NULL DEFAULT 1,
+	UnitaryPrice	FLOAT(4)	NOT NULL DEFAULT 0,
+    FOREIGN KEY(IdArticle) REFERENCES article(IdArticle),
+	FOREIGN KEY(IdOrder) REFERENCES order(IdOrder)
+);
+
+-- ALTER TABLE article ADD COLUMN IdCategory INT(4);
+-- ALTER TABLE article ADD FOREIGN KEY(IdCategory) REFERENCES categorie(IdCategory);
+
+-- select IdArticle,article.Description,Brand,UnitaryPrice,article.IdCategory,CatName,categorie.Description 
+-- from article inner join categorie where article.IdCategory = categorie.IdCategory and IdArticle=1;
+
+-- SELECT IdArticle,article.Description,brand,UnitaryPrice,CatName FROM article 
+-- INNER JOIN categorie WHERE article.IdCategory=categorie.IdCategory AND IdArticle>10 ORDER BY UnitaryPrice;
+-- SELECT * FROM article;
