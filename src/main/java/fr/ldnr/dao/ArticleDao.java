@@ -22,21 +22,26 @@ import java.util.List;
  * Classe pour faire la liaison entre les objets Poo et la BDD
  * ArticleDao s'occupe de la classe Article
  */
-public class ArticleDao extends AbstractDao<Article> {
+public class ArticleDao {
+	
+	private final DSLContext dsl;
+
+    public ArticleDao(DSLContext dsl) {
+        this.dsl = dsl;
+    }
 
 	/**
      * Récupère la liste de tous les articles.
+     * @return une liste de ArticleRecord
      */
-	@Override
-	public List<Article> findAll() {
-        List<Article> articles = new ArrayList<>();
-        return articles;
-	}
+	public List<ArticleRecord> findAll() {
+        return dsl.selectFrom(ARTICLE)
+                  .fetch();
+    }
 
 	/**
      * Recherche un article par son identifiant (idArticle).
      */
-	@Override
 	public Optional<Article> findById(int idArticle) {
         String sql = "SELECT idArticle, description, brand, unitaryPrice FROM article WHERE idArticle = ?";
         return null;
