@@ -62,11 +62,9 @@ public class ArticleDao {
 	/**
      * Met à jour un article existant.
      */
-	@Override
-	public boolean update(Article article) {
-        String sql = "UPDATE article SET description = ?, brand = ?, unitaryPrice = ? WHERE idArticle = ?";
-
-            return false;
+	public void update(ArticleRecord article) {
+        article.attach(dsl.configuration()); // Attache le record à la BDD
+        article.store(); // Met à jour automatiquement en BDD
     }
 
 	/**
