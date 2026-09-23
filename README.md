@@ -34,7 +34,6 @@ db.name=votre_base
 
 Il est à renommer en `env.properties` et à personnaliser avec vos propriétés d'accès à votre base MariaDB.
 
-
 ## Importer le script SQL dans la base de données MariaDB
 
 **L'installation de MariaDb n'est pas abordée dans ce document** mais elle est indispensable.
@@ -53,7 +52,6 @@ Get-Content .\Shop.sql | mariadb -u root -p
 cd "SQL"
 mariadb -u root -p < Shop.sql
 ```
-
 
 ## Exécuter le projet 
 
@@ -179,7 +177,36 @@ demo-maven
         └── java
 ```
 
-#### 2.2. Rechercher des dépendances JAVA
+#### 2.2. Permettre à `pom.xml` de lire les paramètres de connexion à la BDD
+
+Pour que le projet puisse lire les variables d'environnement écrites dasn env.properties, il est nécesssaire d'ajouter le plugin
+org.codehaus.mojo.
+J'ai ouvert pom.xml avec un éditeur et dans entre une balise ouvrante et fermante <plugins>
+J'ai ajouter ceci:
+
+```xml
+<!-- 1. Plugin pour lire le fichier env.properties au début du build (phase initialize) -->
+    <plugin>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>properties-maven-plugin</artifactId>
+      <version>1.2.1</version>
+      <executions>
+        <execution>
+          <phase>initialize</phase>
+          <goals>
+            <goal>read-project-properties</goal>
+          </goals>
+          <configuration>
+            <files>
+              <file>env.properties</file>
+            </files>
+          </configuration>
+        </execution>
+      </executions>
+    </plugin>
+```
+
+#### 2.3. Rechercher des dépendances JAVA
 
 **Windows**
 
