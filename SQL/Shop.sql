@@ -30,18 +30,18 @@ INSERT INTO article ( description, brand ) VALUES ('WebCam', 'Logitoch');
 
 CREATE TABLE categorie (
 	idCategory INT(4) PRIMARY KEY AUTO_INCREMENT,
-	CatName VARCHAR(30) NOT NULL,
+	catName VARCHAR(30) NOT NULL,
 	description VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE user (
 	idUser				int(4)		PRIMARY KEY AUTO_INCREMENT,
-	Login				varchar(20)	NOT NULL UNIQUE,
+	login				varchar(20)	NOT NULL UNIQUE,
 	Password			varchar(20)	NOT NULL
 );
 
 CREATE TABLE customer (
-	id					int(10)			PRIMARY KEY AUTO_INCREMENT,
+	idCustomer			int(10)			PRIMARY KEY AUTO_INCREMENT,
 	name				varchar(20) 	NOT NULL,
 	firstName			varchar(20) 	NOT NULL,
 	email				varchar(45) 	NOT NULL,
@@ -52,11 +52,11 @@ CREATE TABLE customer (
 );
 
 CREATE TABLE order (
-	IdOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
-	Amount			float(4)	NOT NULL DEFAULT 0,
-	DateOrder 		DATE		NOT NULL DEFAULT NOW(),
-	IdCustomer      INT(4)   	NOT NULL,
-	FOREIGN KEY(IdCustomer) REFERENCES customer(IdCustomer)
+	idOrder			int(4)	PRIMARY KEY AUTO_INCREMENT,
+	amount			float(4)	NOT NULL DEFAULT 0,
+	dateOrder 		DATE		NOT NULL DEFAULT NOW(),
+	ddCustomer      INT(4)   	NOT NULL,
+	FOREIGN KEY(idCustomer) REFERENCES customer(idCustomer)
 );
 
 CREATE TABLE order_item (
