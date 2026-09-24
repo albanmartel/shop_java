@@ -2,20 +2,26 @@ package fr.ldnr.ex3threads;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 
 /**
  *
  */
+
 public class ThreadTime {
 
     public static void main(String[] args) {
-        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        
         Thread thread = new Thread(new MonRunnable(1000));
-
-        System.out.println(df.format(new Date()));
+        long epochMillis = Instant.now().toEpochMilli();
 
         thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     /**
@@ -37,18 +43,22 @@ public class ThreadTime {
 
         @Override
         public void run() {
-            System.out.println("Début du processus");
+            System.out.println("(L'horloge s'arrête après une minute !)\n");
             int i = 1;
-            while (i < 6) {
+            long epochMillis = Instant.now().toEpochMilli();
+            while (i < 60) {
                 try {
                     Thread.sleep(delai);
-                    System.out.println(i + "-".repeat(i));
+                    epochMillis +=  1000L;
+                    Date date = new Date(epochMillis);
+                    DateFormat df = new SimpleDateFormat("HH:mm:ss");
+                    System.out.print("\rHorloge: " + df.format(date));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 i++;
             }
-            System.out.println("Fin du processus");
+            System.out.println();
         }
     }
 }
