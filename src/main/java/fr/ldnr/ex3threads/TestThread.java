@@ -259,6 +259,8 @@ public class TestThread extends Thread {
             System.out.println("\n--- Exercice 3.2 ---\n");
             secondthreadExecution();
             System.out.println("\nLes Threads sont sérialisés avec \"NomThread.join()\".\nCe ne sont plus vraiment des threads mais des séquences !\n");
+            System.out.println("\n--- Exercice 3.3 ---\n");
+            ThreadTime.main(args);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.out.println("Une exception s'est produite : \n" + e.getMessage());
