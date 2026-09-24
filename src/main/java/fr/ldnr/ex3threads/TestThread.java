@@ -4,15 +4,7 @@ public class TestThread extends Thread {
     private String typeAction;
     private int firstThreadNumber;
     private int secondThreadNumber;
-    private String message;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    private static String message;
 
     public void setFirstThreadNumber(int firstThreadNumber) {
         this.firstThreadNumber = firstThreadNumber;
@@ -54,7 +46,7 @@ public class TestThread extends Thread {
 
     private void callSecond() {
         String[] beginEnd = {"!", "\"", "#", "$", "%", "&", "'", "(", ")", "*"};
-        System.out.println((this.secondThreadNumber - 1) + " " + beginEnd[this.secondThreadNumber - 1] + " " + returnSecondMotiv(beginEnd[this.secondThreadNumber - 1], this.secondThreadNumber));
+        message += returnSecondMotiv(beginEnd[this.secondThreadNumber - 1], this.secondThreadNumber) +"\n";
     }
 
         /**
@@ -114,7 +106,6 @@ public class TestThread extends Thread {
     public static void firstThreadExecution() throws InterruptedException {
         TestThread testThread1 = new TestThread("first");
         testThread1.setFirstThreadNumber(1);
-        testThread1.setMessage("");
         TestThread testThread2 = new TestThread("first");
         testThread2.setFirstThreadNumber(2);
         TestThread testThread3 = new TestThread("first");
@@ -149,6 +140,7 @@ public class TestThread extends Thread {
      * Méthode pour répondre à la quesion
      */
     public static void secondthreadExecution() throws InterruptedException {
+        message = "";
         TestThread secondTestThread1 = new TestThread("second");
         secondTestThread1.setSecondThreadNumber(1);
         TestThread secondTestThread2 = new TestThread("second");
@@ -245,6 +237,7 @@ public class TestThread extends Thread {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+        System.err.println(message);
     }
 
     /**
@@ -256,11 +249,16 @@ public class TestThread extends Thread {
         System.out.println("Lancement des threads!");
         TestThread testThread = new TestThread("first");
         try {
-            System.out.println("Pourquoi en relançant les mêmes threads j'ai un résultat différent : \n");
+            System.out.println("\n--- Exercice 3.1 ---\n");
+            System.out.println("Pourquoi en relançant les mêmes threads j'ai un résultat différent ? : \n");
+            System.out.println("Premier lancement : \n");
             firstThreadExecution();
-            System.out.println("Parce qu'il y a de la concurrence entre les Threads !");
+            System.out.println("\n Second lancement : \n");
             firstThreadExecution();
+            System.out.println("\nRéponse: il y a de la concurrence entre les Threads !");
+            System.out.println("\n--- Exercice 3.2 ---\n");
             secondthreadExecution();
+            System.out.println("\nLes Threads sont sérialisés avec \"NomThread.join()\".\nCe ne sont plus vraiment des threads mais des séquences !\n");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             System.out.println("Une exception s'est produite : \n" + e.getMessage());
