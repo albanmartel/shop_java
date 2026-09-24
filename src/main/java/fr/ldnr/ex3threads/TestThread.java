@@ -29,14 +29,21 @@ public class TestThread extends Thread {
      * @return un chaîne construite
      */
     public static String returnMotiv(int i){
-        return i + "-".repeat(i) + " ";
+        /* Méthode Java 11 */
+        //return i + "-".repeat(i) + " ";
+
+        /* Méthode avant Java 11 */
+        String motiv = String.valueOf(i);
+        for (int j=0;j<i;j++){
+            motiv += "-";
+        }
+        return motiv + " ";
     }
 
     /**
-     * Méthode appelée par défaut, le point d'entrée de la classe
-     * @param args Tableau de Strings
+     * Méthode déléguée du main
      */
-    public static void main(String[] args) {
+    public static void threadExecution() {
         TestThread TestThread1 = new TestThread(returnMotiv(1));
         TestThread TestThread2 = new TestThread(returnMotiv(2));
         TestThread TestThread3 = new TestThread(returnMotiv(3));
@@ -47,14 +54,25 @@ public class TestThread extends Thread {
         TestThread3.start();
         TestThread2.start();
         TestThread1.start();
-
         /*
         Thread thirdThread = new Thread() {
             public void run() {
-                System.out.println("!!! Autre ecriture!!!");
+                System.out.println("!!! Autre écriture!!!");
             }
         };
         thirdThread.start();
-         */
+        */
+    }
+
+    /**
+     * Méthode appelée par défaut, le point d'entrée de la classe
+     * @param args Tableau de Strings
+     */
+    public static void main(String[] args) {
+        System.out.println("Lancement des threads!");
+        threadExecution();
+        System.out.println("Pourquoi en relançant les mêmes threads j'ai un résultat différent : \n");
+        threadExecution();
+        System.out.println("Parce qu'il y a de la concurence entre les Threads !");
     }
 }
