@@ -7,16 +7,6 @@ import java.util.Date;
 /**
  *
  */
-/**
- *
- */
-/**
- *
- */
-
-/**
- *
- */
 public class ThreadTime {
 
     public static void main(String[] args) {
