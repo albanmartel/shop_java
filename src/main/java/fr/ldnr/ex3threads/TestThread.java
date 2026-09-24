@@ -3,13 +3,28 @@ package fr.ldnr.ex3threads;
 import java.awt.*;
 
 public class TestThread extends Thread {
+    private String typeAction;
+    private int threadNumber;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setThreadNumber(int threadNumber) {
+        this.threadNumber = threadNumber;
+    }
 
     /**
      *
-     * @param name
+     * @param typeAction ce paramètre permet d'appeler différentes actions en fonction du nom de l'action
      */
-    public TestThread(String name) {
-        super(name);
+    public TestThread(String typeAction) {
+        this.typeAction = typeAction;
     }
 
     /**
@@ -17,10 +32,53 @@ public class TestThread extends Thread {
      */
     @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
-            System.out.print(this.getName());
+        switch (typeAction) {
+            case "first":
+                callFirst();
+            case "second":
+                callSecond();
         }
-        System.out.println();
+    }
+
+    private void callFirst() {
+        String message = "";
+        for (int i = 0; i < 10; i++) {
+            message += repeteMotiv(returnFirstMotiv(this.threadNumber), 5) + "\n";
+        }
+        if (this.message != null){
+            message += this.message;
+        }
+        this.message = message;
+    }
+
+    private void callSecond() {
+        String message = "";
+        String[] beginEnd = {"!", "\"", "#", "$", "%", "&", "'", "(", ")", "*"};
+        for (int i = 1; i < 11; i++) {
+            message += returnSecondMotiv(beginEnd[i-1], i);
+            message += "\n";
+        }
+        if (this.message != null){
+            message += this.message;
+        }
+        this.message = message;
+    }
+
+        /**
+     *
+     * @param i indique l'indice du theard
+     * @return un chaîne construite
+     */
+    public static String repeteMotiv(String motiv, int i) {
+        String message = "";
+        /* Méthode Java 11 */
+        //return motiv.repeat(i);
+
+        /* Méthode avant Java 11 */
+        for (int j = 0; j < i; j++) {
+            message +=  motiv;
+        }
+        return message;
     }
 
     /**
@@ -46,9 +104,6 @@ public class TestThread extends Thread {
      * @return un chaîne construite
      */
     public static String returnSecondMotiv(String beginEndCharacter, int i) {
-        /* Méthode Java 11 */
-        //return i + "-".repeat(i) + " ";
-
         /* Méthode avant Java 11 */
         String motiv = beginEndCharacter;
         for (int j = 0; j < i; j++) {
@@ -63,17 +118,23 @@ public class TestThread extends Thread {
     /**
      * Méthode déléguée du main
      */
-    public static void firstThreadExecution() {
-        TestThread TestThread1 = new TestThread(returnFirstMotiv(1));
-        TestThread TestThread2 = new TestThread(returnFirstMotiv(2));
-        TestThread TestThread3 = new TestThread(returnFirstMotiv(3));
-        TestThread TestThread4 = new TestThread(returnFirstMotiv(4));
-        TestThread TestThread5 = new TestThread(returnFirstMotiv(5));
-        TestThread5.start();
-        TestThread4.start();
-        TestThread3.start();
-        TestThread2.start();
-        TestThread1.start();
+    public static void firstThreadExecution() throws InterruptedException {
+        TestThread testThread1 = new TestThread("first");
+        testThread1.setThreadNumber(1);
+        TestThread testThread2 = new TestThread("first");
+        testThread2.setThreadNumber(2);
+        TestThread testThread3 = new TestThread("first");
+        testThread3.setThreadNumber(3);
+        TestThread testThread4 = new TestThread("first");
+        testThread4.setThreadNumber(4);
+        TestThread testThread5 = new TestThread("first");
+        testThread5.setThreadNumber(5);
+
+        testThread5.start();
+        testThread4.start();
+        testThread3.start();
+        testThread2.start();
+        testThread1.start();
         /*
         Thread thirdThread = new Thread() {
             public void run() {
@@ -82,88 +143,108 @@ public class TestThread extends Thread {
         };
         thirdThread.start();
         */
+        /*
+        testThread5.join();
+        testThread4.join();
+        testThread3.join();
+        testThread2.join();
+        testThread1.join();
+        */
+
+        System.out.println(testThread1.getMessage());
     }
 
     /**
      * Méthode pour répondre à la quesion
      */
-    public static void secondthreadExecution() {
-        TestThread TestThread1 = new TestThread(returnSecondMotiv("!", 1));
-        TestThread TestThread2 = new TestThread(returnSecondMotiv("\"", 2));
-        TestThread TestThread3 = new TestThread(returnSecondMotiv("#", 3));
-        TestThread TestThread4 = new TestThread(returnSecondMotiv("$", 4));
-        TestThread TestThread5 = new TestThread(returnSecondMotiv("%", 5));
-        TestThread TestThread6 = new TestThread(returnSecondMotiv("&", 6));
-        TestThread TestThread7 = new TestThread(returnSecondMotiv("'", 7));
-        TestThread TestThread8 = new TestThread(returnSecondMotiv("(", 8));
-        TestThread TestThread9 = new TestThread(returnSecondMotiv(")", 9));
-        TestThread TestThread10 = new TestThread(returnSecondMotiv("*", 10));
+    public static void secondthreadExecution() throws InterruptedException {
+        TestThread testThread1 = new TestThread("second");
+        TestThread testThread2 = new TestThread("second");
+        TestThread testThread3 = new TestThread("second");
+        TestThread testThread4 = new TestThread("second");
+        TestThread testThread5 = new TestThread("second");
+        TestThread testThread6 = new TestThread("second");
+        TestThread testThread7 = new TestThread("second");
+        TestThread testThread8 = new TestThread("second");
+        TestThread testThread9 = new TestThread("second");
+        TestThread testThread10 = new TestThread("second");
 
-
-        TestThread1.start();
+        testThread1.start();
 
         try {
-            TestThread1.join();
+            testThread1.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        TestThread2.start();
+        testThread2.start();
 
         try {
-            TestThread2.join();
+            testThread2.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        TestThread3.start();
+        testThread3.start();
 
         try {
-            TestThread3.join();
+            testThread3.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-
+        testThread4.start();
         try {
-            TestThread4.join();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        TestThread5.start();
-
-        try {
-            TestThread5.join();
+            testThread4.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
-        TestThread6.start();
+        testThread5.start();
 
         try {
-            TestThread6.join();
+            testThread5.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
 
-        TestThread7.start();
+        testThread6.start();
 
         try {
-            TestThread7.join();
+            testThread6.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        TestThread8.start();
+
+        testThread7.start();
+
         try {
-            TestThread8.join();
+            testThread7.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        TestThread9.start();
+
+        testThread8.start();
+
         try {
-            TestThread9.join();
+            testThread8.join();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        TestThread10.start();
+
+        testThread9.start();
+
+        try {
+            testThread9.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        testThread10.start();
+
+        try {
+            testThread9.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        System.out.println(testThread1.getMessage());
     }
 
     /**
@@ -173,10 +254,22 @@ public class TestThread extends Thread {
      */
     public static void main(String[] args) {
         System.out.println("Lancement des threads!");
-        firstThreadExecution();
-        System.out.println("Pourquoi en relançant les mêmes threads j'ai un résultat différent : \n");
-        firstThreadExecution();
-        System.out.println("Parce qu'il y a de la concurrence entre les Threads !");
-        secondthreadExecution();
+        TestThread testThread = new TestThread("first");
+        try {
+            System.out.println("Pourquoi en relançant les mêmes threads j'ai un résultat différent : \n");
+            firstThreadExecution();
+            testThread.setMessage("");
+            System.out.println("Parce qu'il y a de la concurrence entre les Threads !");
+            firstThreadExecution();
+            testThread.setMessage("");
+            secondthreadExecution();
+            testThread.setMessage("");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Une exception s'est produite : \n" + e.getMessage());
+        }
+
+
+
     }
 }
