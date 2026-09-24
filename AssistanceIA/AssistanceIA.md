@@ -673,9 +673,56 @@ git switch ma-branche
 git rebase main
 ```
 
-
 * **Avantage :** Historique très propre et lisible.
 * **Inconvénient :** Réécrit l'historique de tes commits localement. À éviter si la branche est déjà partagée avec d'autres collaborateurs.
+
+## Question 6.0 Les liens vers les branches git
+
+1. Que ce passe t'il quand quelqu'un fait un clone d'un projet où il y a plusieurs branches ? Il va recevoir le code de quelle branche ? 2. Quand je donne un lien vers mon dépôt git, est-ce que je peux donner le lien vers une branche spécifique ?
+
+## Question 6.1 Réponse de Gemini
+
+Voici les réponses à tes deux questions :
+
+
+### 6.1. Lors d'un `git clone`, quelle branche reçoit-on ?
+
+Quand quelqu'un clone un dépôt, il télécharge **l'intégralité de l'historique et toutes les branches du projet**.
+
+Cependant, dans son dossier de travail local, c'est la **branche par défaut du dépôt** (généralement `main` ou `master`) qui est automatiquement extraite (`checkout`).
+
+* **Accéder aux autres branches :** Les autres branches existent localement sous forme de branches distantes (*remote tracking branches*). Pour y basculer directement, la personne a juste à faire :
+```bash
+git switch nom-de-la-branche
+```
+
+
+* **Voir toutes les branches disponibles :**
+```bash
+git branch -a
+```
+
+
+### 6.2. Peux-tu donner un lien vers une branche spécifique ?
+
+**Oui, tout à fait.**
+
+Si ton projet est hébergé sur une plateforme comme **GitHub**, **GitLab** ou **Bitbucket**, chaque branche possède sa propre URL web.
+
+* **Lien pour consulter le code sur le Web :**
+En naviguant sur l'interface (GitHub/GitLab), tu peux changer de branche via le menu déroulant. L'URL dans la barre de ton navigateur s'adaptera.
+* Exemple sur GitHub : `[https://github.com/utilisateur/projet/tree/nom-de-la-branche](https://github.com/utilisateur/projet/tree/nom-de-la-branche)`
+
+
+* **Lien pour cloner directement une branche spécifique en ligne de commande :**
+Si tu veux qu'une personne clone directement ton dépôt en se plaçant d'emblée sur une branche précise, elle peut ajouter l'option `-b` :
+```bash
+git clone -b nom-de-la-branche https://github.com/utilisateur/projet.git
+```
+
+
+
+
 
 
 
